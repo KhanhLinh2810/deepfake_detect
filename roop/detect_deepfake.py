@@ -33,10 +33,10 @@ def pre_start() -> bool:
 
 def check_deepfake(frame: Frame) -> int:
     prediction = model_detect_deepfake.predict(np.expand_dims(Frame, axis=0))
-    if prediction < 0.5:
-        return 0
-    else:
+    if prediction > 0.5:
         return 1
+    else:
+        return 0
 
 
 def process_image(source_path: str) -> bool:
@@ -51,6 +51,8 @@ def process_image(source_path: str) -> bool:
         bottom = face.rect.bottom()
 
         tmp_image_face = source_frame[top:bottom, left:right]
+
+
 
         if (check_deepfake(tmp_image_face)==1):
             is_deepfake_image = True
