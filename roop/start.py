@@ -1,6 +1,6 @@
 import argparse
 import os
-import detect_deepfake
+import roop.detect_deepfake
 import signal
 import roop.globals
 
@@ -25,19 +25,19 @@ def update_status(message: str, scope: str = 'ROOP.CORE') -> None:
 
 
 def start() -> None:
-    if not detect_deepfake.pre_start():
+    if not roop.detect_deepfake.pre_start():
         return
     # process image to image
     if has_image_extension(roop.globals.source_path):
         # process frame
         update_status('Progressing... Detect deepfake')
-        detect_deepfake.process_image(roop.globals.source_path)
+        roop.detect_deepfake.process_image(roop.globals.source_path)
 
 
 
 def run() -> None:
     parse_args()
-    if not detect_deepfake.pre_check():
+    if not roop.detect_deepfake.pre_check():
         return
     
     if roop.globals.headless:
